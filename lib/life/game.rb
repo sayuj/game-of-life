@@ -8,6 +8,14 @@ class Life::Game
     init_cells
   end
 
+  def display
+    cells.map do |row_cells|
+      row_cells.map do |cell|
+        cell.alive? ? '*' : '-'
+      end.join("\t")
+    end.join("\n")
+  end
+
   def evolve!
     next_gen_cells = (0..(width - 1)).map do |x|
       (0..(height - 1)).map do |y|

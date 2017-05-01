@@ -61,4 +61,22 @@ describe Life::Game do
       expect(subject.cells[1][1].alive?).to eq true
     end
   end
+
+  describe '#display' do
+    subject { Life::Game.new(height: 5, width: 5) }
+
+    before do
+      subject.cells[0][0].alive!
+      subject.cells[0][2].alive!
+      subject.cells[1][0].alive!
+    end
+
+    it 'displays with * for live cell and - for dead cell' do
+      expect(subject.display).to eq "*\t-\t*\t-\t-\n"\
+                                    "*\t-\t-\t-\t-\n"\
+                                    "-\t-\t-\t-\t-\n"\
+                                    "-\t-\t-\t-\t-\n"\
+                                    "-\t-\t-\t-\t-"
+    end
+  end
 end

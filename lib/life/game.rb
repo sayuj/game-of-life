@@ -1,11 +1,10 @@
 class Life::Game
   attr_reader :width, :height, :cells
 
-  # TODO Get initial state too
   def initialize(options = {})
     @width  = options[:width]  || 2
     @height = options[:height] || 2
-    init_cells
+    init_cells(options[:live_cells] || [])
   end
 
   def play
@@ -73,10 +72,12 @@ class Life::Game
 
   private
 
-  def init_cells
+  def init_cells(live_cells = [])
     @cells = (0..(width - 1)).map do |x|
       (0..(height - 1)).map do |y|
-        Life::Cell.new(x: x, y: y)
+        cell = Life::Cell.new(x: x, y: y)
+        cell.alive! if live_cells.include? [x, y]
+        cell
       end
     end
   end

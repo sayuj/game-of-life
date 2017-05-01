@@ -6,6 +6,14 @@ describe Life::Game do
     it { expect(subject.width).to eq 10 }
     it { expect(subject.cells.count).to eq 10 }
     it { expect(subject.cells.flatten.count).to eq 100 }
+
+    context 'with initial state' do
+      subject { Life::Game.new(height: 10, width: 10, live_cells: [[1, 1], [1, 2], [1, 3]]) }
+      it { expect(subject.cells[0][0].alive?).to eq false }
+      it { expect(subject.cells[1][1].alive?).to eq true }
+      it { expect(subject.cells[1][2].alive?).to eq true }
+      it { expect(subject.cells[2][2].alive?).to eq false }
+    end
   end
 
   describe '#neighbours' do

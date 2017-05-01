@@ -9,6 +9,7 @@ class Life::Game
 
   def play
     loop do
+      system 'clear'
       display
       evolve!
       sleep(1)

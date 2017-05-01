@@ -92,6 +92,7 @@ describe Life::Game do
   describe '#play' do
     it 'evolves to next generation and displays the cells every seconds' do
       expect(subject).to receive(:loop).and_yield
+      expect(subject).to receive(:system).with('clear')
       expect(subject).to receive(:display)
       expect(subject).to receive(:evolve!)
       expect(subject).to receive(:sleep).with(1)

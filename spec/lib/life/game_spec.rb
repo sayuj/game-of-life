@@ -45,4 +45,20 @@ describe Life::Game do
       it { expect(subject.next_generation(subject.cells[2][1]).alive?).to eq true }
     end
   end
+
+  describe '#evolve' do
+    before do
+      subject.cells[0][0].alive!
+      subject.cells[0][2].alive!
+      subject.cells[1][0].alive!
+    end
+
+    it 'evolves the game to next generation' do
+      subject.evolve!
+      expect(subject.cells[0][0].alive?).to eq false
+      expect(subject.cells[0][1].alive?).to eq true
+      expect(subject.cells[1][0].alive?).to eq false
+      expect(subject.cells[1][1].alive?).to eq true
+    end
+  end
 end

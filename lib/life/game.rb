@@ -8,6 +8,15 @@ class Life::Game
     init_cells
   end
 
+  def evolve!
+    next_gen_cells = (0..(width - 1)).map do |x|
+      (0..(height - 1)).map do |y|
+        next_generation(cells[x][y])
+      end
+    end
+    @cells = next_gen_cells
+  end
+
   def neighbours(cell)
     x = cell.x
     y = cell.y

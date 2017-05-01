@@ -10,4 +10,16 @@ class Life::Cell
   def alive?
     @alive
   end
+
+  def dead?
+    !@alive
+  end
+
+  def alive!
+    @alive = true
+  end
+
+  def dead!
+    @alive = false
+  end
 end

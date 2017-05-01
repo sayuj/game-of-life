@@ -8,7 +8,7 @@ class Life::Game
     init_cells
   end
 
-  def neighbors(cell)
+  def neighbours(cell)
     x = cell.x
     y = cell.y
     neighbor_cells = []
@@ -25,6 +25,23 @@ class Life::Game
     neighbor_cells << cells[x + 1][y + 1] if x < width - 1 && y < height - 1
 
     neighbor_cells
+  end
+
+  def live_neighbours(cell)
+    neighbours(cell).select(&:alive?)
+  end
+
+  def next_generation(cell)
+    next_gen_cell = cell.dup
+    if cell.alive? && (live_neighbours(cell).count < 2 || live_neighbours(cell).count > 3)
+      next_gen_cell.dead!
+    end
+
+    if cell.dead? && live_neighbours(cell).count == 3
+      next_gen_cell.alive!
+    end
+
+    next_gen_cell
   end
 
   private

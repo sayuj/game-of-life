@@ -8,12 +8,22 @@ class Life::Game
     init_cells
   end
 
+  def play
+    loop do
+      display
+      evolve!
+      sleep(1)
+    end
+  end
+
   def display
-    cells.map do |row_cells|
+    output = cells.map do |row_cells|
       row_cells.map do |cell|
         cell.alive? ? '*' : '-'
       end.join("\t")
     end.join("\n")
+
+    puts output
   end
 
   def evolve!

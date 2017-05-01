@@ -72,11 +72,22 @@ describe Life::Game do
     end
 
     it 'displays with * for live cell and - for dead cell' do
-      expect(subject.display).to eq "*\t-\t*\t-\t-\n"\
+      expect(subject).to receive(:puts).with("*\t-\t*\t-\t-\n"\
                                     "*\t-\t-\t-\t-\n"\
                                     "-\t-\t-\t-\t-\n"\
                                     "-\t-\t-\t-\t-\n"\
-                                    "-\t-\t-\t-\t-"
+                                    "-\t-\t-\t-\t-")
+      subject.display
+    end
+  end
+
+  describe '#play' do
+    it 'evolves to next generation and displays the cells every seconds' do
+      expect(subject).to receive(:loop).and_yield
+      expect(subject).to receive(:display)
+      expect(subject).to receive(:evolve!)
+      expect(subject).to receive(:sleep).with(1)
+      subject.play
     end
   end
 end

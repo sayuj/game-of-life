@@ -21,7 +21,7 @@ class Life::Game
       row_cells.map do |cell|
         cell.alive? ? '*' : '-'
       end.join("\t")
-    end.join("\n")
+    end.join("\n\n")
 
     puts output
   end
@@ -36,22 +36,9 @@ class Life::Game
   end
 
   def neighbours(cell)
-    x = cell.x
-    y = cell.y
-    neighbor_cells = []
-
-    neighbor_cells << cells[x - 1][y - 1] if x > 0 && y > 0
-    neighbor_cells << cells[x - 1][y]     if x > 0
-    neighbor_cells << cells[x - 1][y + 1] if x > 0 && y < height - 1
-
-    neighbor_cells << cells[x][y - 1]     if y > 0
-    neighbor_cells << cells[x][y + 1]     if y < height - 1
-
-    neighbor_cells << cells[x + 1][y - 1] if x < width - 1 && y > 0
-    neighbor_cells << cells[x + 1][y]     if x < width - 1
-    neighbor_cells << cells[x + 1][y + 1] if x < width - 1 && y < height - 1
-
-    neighbor_cells
+    neighbour_positions(cell.x, cell.y).map do |x, y|
+      cells[x][y]
+    end
   end
 
   def live_neighbours(cell)
@@ -60,13 +47,10 @@ class Life::Game
 
   def next_generation(cell)
     next_gen_cell = cell.dup
-    if cell.alive? && (live_neighbours(cell).count < 2 || live_neighbours(cell).count > 3)
-      next_gen_cell.dead!
-    end
 
-    if cell.dead? && live_neighbours(cell).count == 3
-      next_gen_cell.alive!
-    end
+    next_gen_cell.dead!  if live_neighbours(cell).count < 2 ||
+                            live_neighbours(cell).count > 3
+    next_gen_cell.alive! if live_neighbours(cell).count == 3
 
     next_gen_cell
   end
@@ -81,5 +65,19 @@ class Life::Game
         cell
       end
     end
+  end
+
+  def neighbour_positions(x, y)
+    all_possible_neighbour_positions(x, y).select do |i, j|
+      (0..(width - 1)).cover?(i) && (0..(height - 1)).cover?(j)
+    end
+  end
+
+  def all_possible_neighbour_positions(x, y)
+    [
+      [x - 1, y - 1], [x - 1, y], [x - 1, y + 1],
+      [x, y - 1], [x, y + 1],
+      [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]
+    ]
   end
 end

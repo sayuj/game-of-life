@@ -80,10 +80,10 @@ describe Life::Game do
     end
 
     it 'displays with * for live cell and - for dead cell' do
-      expect(subject).to receive(:puts).with("*\t-\t*\t-\t-\n"\
-                                    "*\t-\t-\t-\t-\n"\
-                                    "-\t-\t-\t-\t-\n"\
-                                    "-\t-\t-\t-\t-\n"\
+      expect(subject).to receive(:puts).with("*\t-\t*\t-\t-\n\n"\
+                                    "*\t-\t-\t-\t-\n\n"\
+                                    "-\t-\t-\t-\t-\n\n"\
+                                    "-\t-\t-\t-\t-\n\n"\
                                     "-\t-\t-\t-\t-")
       subject.display
     end

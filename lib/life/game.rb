@@ -27,8 +27,8 @@ class Life::Game
   end
 
   def evolve!
-    next_gen_cells = (0..(width - 1)).map do |x|
-      (0..(height - 1)).map do |y|
+    next_gen_cells = (0...width).map do |x|
+      (0...height).map do |y|
         next_generation(cells[x][y])
       end
     end
@@ -58,8 +58,8 @@ class Life::Game
   private
 
   def init_cells(live_cells = [])
-    @cells = (0..(width - 1)).map do |x|
-      (0..(height - 1)).map do |y|
+    @cells = (0...width).map do |x|
+      (0...height).map do |y|
         cell = Life::Cell.new(x: x, y: y)
         cell.alive! if live_cells.include? [x, y]
         cell
@@ -69,7 +69,7 @@ class Life::Game
 
   def neighbour_positions(x, y)
     all_possible_neighbour_positions(x, y).select do |i, j|
-      (0..(width - 1)).cover?(i) && (0..(height - 1)).cover?(j)
+      (0...width).cover?(i) && (0...height).cover?(j)
     end
   end
 
